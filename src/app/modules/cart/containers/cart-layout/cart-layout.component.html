@@ -1,0 +1,7 @@
+<ng-container *ngIf="cart.length; else empty">
+  <cart-list></cart-list>
+</ng-container>
+
+<ng-template #empty>
+  Cart is empty.
+</ng-template>
