@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ProductService } from '../../services/product.service';
+import { ShopService } from '../../services/shop.service';
 
 @Component({
   selector: 'product-list-item',
@@ -14,10 +14,10 @@ export class ProductListItemComponent {
   @Input() isAvailable: boolean = false;
   @Input() id = '';
 
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly shopService: ShopService) {}
 
   addToCart() {
     console.log(`Product ${this.id} added to cart.`);
-    this.productService.buyProduct(this.id);
+    this.shopService.buyProduct(this.id);
   }
 }

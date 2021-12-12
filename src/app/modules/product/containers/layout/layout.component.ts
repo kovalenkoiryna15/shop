@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../components/models/product.model';
-import { ProductService } from '../../services/product.service';
+import { ShopService } from '../../services/shop.service';
 
 @Component({
   selector: 'product-layout',
@@ -10,9 +10,9 @@ import { ProductService } from '../../services/product.service';
 export class ProductLayoutComponent implements OnInit {
   products: Product[] = [];
 
-  constructor(private readonly productService: ProductService) { }
+  constructor(private readonly shopService: ShopService) { }
 
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
+    this.products = this.shopService.getProducts();
   }
 }
