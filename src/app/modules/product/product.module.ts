@@ -4,18 +4,18 @@ import { ProductLayoutComponent } from './containers/layout/layout.component';
 import { ProductListItemComponent } from './components/product-list-item/product-list-item.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductRoutingModule } from './product-routing.module';
-// import { SharedModule } from '../shared/shared.module';
+import { CartListComponent } from './components/cart-list/cart-list.component';
 
 @NgModule({
   declarations: [
     ProductListItemComponent,
     ProductLayoutComponent,
-    ProductListComponent
+    ProductListComponent,
+    CartListComponent
   ],
   imports: [
     CommonModule,
     ProductRoutingModule,
-    // SharedModule,
-  ],
+  ]
 })
 export class ProductModule { }

@@ -1,5 +1,4 @@
-<product-list-item
-    *ngFor="let product of products; trackBy: trackById"
+<product-list-item *ngFor="let product of (shopService.cart$ | async)"
     [name]="product.name"
     [description]="product.description"
     [price]="product.price"

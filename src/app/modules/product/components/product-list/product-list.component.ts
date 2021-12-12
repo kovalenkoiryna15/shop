@@ -8,4 +8,8 @@ import { Product } from '../models/product.model';
 })
 export class ProductListComponent {
   @Input() products: Product[] = [];
+
+  trackById(index: number, item: Product): number {
+    return +item.id;
+  }
 }
