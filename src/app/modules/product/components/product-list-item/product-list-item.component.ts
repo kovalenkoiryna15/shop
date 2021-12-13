@@ -16,7 +16,7 @@ export class ProductListItemComponent {
 
   constructor(private readonly shopService: ShopService) {}
 
-  addToCart() {
+  addToCart(): void {
     console.log(`Product ${this.id} added to cart.`);
     this.shopService.buyProduct(this.id);
   }

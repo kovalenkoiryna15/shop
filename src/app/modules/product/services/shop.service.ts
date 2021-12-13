@@ -10,15 +10,15 @@ export class ShopService {
   products$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>(mock.products);
   cart$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
 
-  getProducts() {
+  getProducts(): Product[] {
     return this.products$.getValue();
   }
 
-  getCart() {
+  getCart(): Product[] {
     return this.cart$.getValue();
   }
 
-  buyProduct(id: string) {
+  buyProduct(id: string): void {
     const product = this.getProducts().find((product: Product) => product.id === id);
     if (product) {
       this.cart$.next([...this.getCart(), product]);
