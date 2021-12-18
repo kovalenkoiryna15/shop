@@ -1,6 +1,6 @@
-<product-list-item *ngFor="let product of (shopService.cart$ | async)"
+<cart-list-item *ngFor="let product of (cart$ | async)"
     [name]="product.name"
     [description]="product.description"
     [price]="product.price"
     [category]="product.category"
-    [id]="product.id"></product-list-item>
+    [id]="product.id"></cart-list-item>
