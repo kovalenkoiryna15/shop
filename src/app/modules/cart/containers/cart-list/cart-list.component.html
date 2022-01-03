@@ -1,6 +1,3 @@
 <cart-list-item *ngFor="let product of (cart$ | async)"
-    [name]="product.name"
-    [description]="product.description"
-    [price]="product.price"
-    [category]="product.category"
-    [id]="product.id"></cart-list-item>
+  [product]="product"
+  (deleteFromCart)="deleteFromCart($event)"></cart-list-item>

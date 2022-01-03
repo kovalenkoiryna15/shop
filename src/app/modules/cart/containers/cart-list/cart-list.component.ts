@@ -13,4 +13,8 @@ export class CartListComponent {
   cart$: Observable<Product[]> = this.cartService.getCart();
 
   constructor(public readonly cartService: CartService) {}
+
+  deleteFromCart(id: string): void {
+    this.cartService.deleteFromCart(id);
+  }
 }

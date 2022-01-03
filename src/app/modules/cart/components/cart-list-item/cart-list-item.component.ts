@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { Product } from '../../models/cart.model';
+
 @Component({
   selector: 'cart-list-item',
   templateUrl: './cart-list-item.component.html',
@@ -7,15 +9,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartListItemComponent {
-  @Input() id = '';
-  @Input() name = '';
-  @Input() price = '';
-  @Input() description = '';
-  @Input() category = '';
-  @Input() isAvailable: boolean = false;
+  @Input() product!: Product;
+
   @Output() deleteFromCart: EventEmitter<string> = new EventEmitter();
 
   onDeleteFromCart() {
-    this.deleteFromCart.emit(this.id);
+    this.deleteFromCart.emit(this.product.id);
   }
 }
