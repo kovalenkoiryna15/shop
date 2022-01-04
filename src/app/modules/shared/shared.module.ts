@@ -5,6 +5,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatInputModule} from '@angular/material/input';
+import { HighlightDirective } from './directives/highlight.directive';
 
 const material = [
   MatCardModule,
@@ -21,6 +22,10 @@ const material = [
   ],
   exports: [
     ...material,
+    HighlightDirective,
+  ],
+  declarations: [
+    HighlightDirective
   ]
 })
 export class SharedModule {}
