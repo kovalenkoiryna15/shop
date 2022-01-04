@@ -17,4 +17,8 @@ export class CartListComponent {
   deleteFromCart(id: string): void {
     this.cartService.deleteFromCart(id);
   }
+
+  updateNumber({ id, num }: { id: string, num: number }): void {
+    this.cartService.updateNumber(id, num);
+  }
 }

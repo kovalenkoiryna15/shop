@@ -13,7 +13,13 @@ export class CartListItemComponent {
 
   @Output() deleteFromCart: EventEmitter<string> = new EventEmitter();
 
+  @Output() numberChange: EventEmitter<{ id: string, num: number }> = new EventEmitter();
+
   onDeleteFromCart() {
     this.deleteFromCart.emit(this.product.id);
+  }
+
+  onNumberChange(event: Event) {
+    this.numberChange.emit({ id: this.product.id, num: +(<HTMLInputElement>event.target).value });
   }
 }

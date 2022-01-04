@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Product } from '../models/cart.model';
 
@@ -28,7 +28,6 @@ export class CartService {
 
   getCart(): Observable<Product[]> {
     this.updateCart(this.readCart());
-
     return this.cart$.asObservable();
   }
 
@@ -38,6 +37,14 @@ export class CartService {
 
   getTotalProductCount(): Observable<number> {
     return this.cartTotalProductCount$.asObservable();
+  }
+
+  updateTotalAmount(cart: Product[]): number {
+    return cart.reduce((acc, product) => acc + (+product.price * product.number), 0);
+  }
+
+  updateTotalProductCount(cart: Product[]): number {
+    return cart.reduce((acc, product) => acc + product.number, 0);
   }
 
   deleteFromCart(id: string): void {
@@ -54,11 +61,17 @@ export class CartService {
     }
   }
 
-  updateTotalAmount(cart: Product[]): number {
-    return cart.reduce((acc, product) => acc + (+product.price * product.number), 0);
-  }
+  updateNumber(id: string, num: number): void {
+    const product = this.cart$.getValue().find((product) => product.id === id);
 
-  updateTotalProductCount(cart: Product[]): number {
-    return cart.reduce((acc, product) => acc + product.number, 0);
+    if (product) {
+      const cart = [...this.cart$.getValue()];
+
+      num
+      ? cart.splice(cart.indexOf(product), 1,  { ...product, number: num })
+      : cart.splice(cart.indexOf(product), 1);
+
+      this.updateCart(cart);
+    }
   }
 }
