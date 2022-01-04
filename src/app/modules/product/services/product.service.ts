@@ -7,33 +7,55 @@ import { Product } from '../models/product.model';
   providedIn: 'root'
 })
 export class ProductService {
-  products$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>(JSON.parse(localStorage.getItem('products')! || JSON.stringify({ products: []})).products);
+  products$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>(this.readProducts());
+
+  readProducts(): Product[] {
+    const products = localStorage.getItem('products');
+    return products ? JSON.parse(products).products : [];
+  }
+
+  readCart(): Product[] {
+    const cart = localStorage.getItem('cart');
+    return cart ? JSON.parse(cart) : this.initCart();
+  }
+
+  updateCart(cart: Product[]): Product[] {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    return cart;
+  }
 
   getProducts(): Observable<Product[]> {
     return this.products$.asObservable();
   }
 
-  initCart(): string {
-    const cart = JSON.stringify([])
-    localStorage.setItem('cart', cart);
-    return cart;
+  initCart(): Product[] {
+    return this.updateCart([]);
   }
 
   buyProduct(id: string): void {
     const product = this.products$.getValue().find((product) => product.id === id);
-    const cart = [...JSON.parse(localStorage.getItem('cart')! || this.initCart()) as Product[]];
+    const cart = [...this.readCart()];
+
     if (product && cart) {
       const existedProduct = cart.find((product) => product.id === id);
+
       if (existedProduct) {
-        cart.splice(cart.indexOf(existedProduct), 1, { ...existedProduct, number: existedProduct.number ? existedProduct.number += 1 : 1 });
-        localStorage.setItem('cart', JSON.stringify(cart));
+        existedProduct.number = existedProduct.number ? existedProduct.number += 1 : 1;
+        cart.splice(cart.indexOf(existedProduct), 1, existedProduct);
+        this.updateCart(cart);
       } else {
-        localStorage.setItem('cart', JSON.stringify([...cart, { ...product, number: product.number ? product.number += 1 : 1 }]));
+        this.updateCart([
+          ...cart,
+          {
+            ...product,
+            number: product.number ? product.number += 1 : 1,
+          },
+        ]);
       }
     } else if (product) {
-      localStorage.setItem('cart', JSON.stringify([product]));
+      this.updateCart([product]);
     } else {
-      localStorage.setItem('cart', JSON.stringify([]));
+      this.updateCart([]);
     }
   }
 }
