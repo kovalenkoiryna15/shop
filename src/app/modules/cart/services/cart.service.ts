@@ -7,23 +7,28 @@ import { Product } from '../models/cart.model';
   providedIn: 'root'
 })
 export class CartService {
-  cart$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>(JSON.parse(localStorage.getItem('cart')! || this.initCart()));
+  cart$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>(this.readCart());
 
   cartTotalAmount$: BehaviorSubject<number> = new BehaviorSubject<number>(this.updateTotalAmount(this.cart$.getValue()));
 
   cartTotalProductCount$: BehaviorSubject<number> = new BehaviorSubject<number>(this.updateTotalProductCount(this.cart$.getValue()));
 
-  initCart(): string {
-    const cart = JSON.stringify([])
-    localStorage.setItem('cart', cart);
-    return cart;
+  readCart(): Product[] {
+    const cart = localStorage.getItem('cart');
+    return cart ? JSON.parse(cart) : [];
   }
 
-  getCart(): Observable<Product[]> {
-    const cart = JSON.parse(localStorage.getItem('cart')! || this.initCart());
+  updateCart(cart: Product[]): void {
     this.cart$.next(cart);
     this.cartTotalAmount$.next(this.updateTotalAmount(cart));
     this.cartTotalProductCount$.next(this.updateTotalProductCount(cart));
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  getCart(): Observable<Product[]> {
+    this.updateCart(this.readCart());
+
     return this.cart$.asObservable();
   }
 
@@ -37,15 +42,15 @@ export class CartService {
 
   deleteFromCart(id: string): void {
     const product = this.cart$.getValue().find((product) => product.id === id);
+
     if (product) {
       const cart = [...this.cart$.getValue()];
+
       (--product.number > 0)
         ? cart.splice(cart.indexOf(product), 1,  { ...product, number: product.number })
         : cart.splice(cart.indexOf(product), 1);
-      this.cart$.next(cart);
-      this.cartTotalAmount$.next(this.updateTotalAmount(cart));
-      this.cartTotalProductCount$.next(this.updateTotalProductCount(cart));
-      localStorage.setItem('cart', JSON.stringify(cart));
+
+      this.updateCart(cart);
     }
   }
 
