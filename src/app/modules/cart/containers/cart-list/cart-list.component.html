@@ -1,0 +1,5 @@
+<cart-list-item
+  *ngFor="let product of (cart$ | async)"
+  [product]="product"
+  (deleteFromCart)="deleteFromCart($event)"
+  (numberChange)="updateNumber($event)"></cart-list-item>

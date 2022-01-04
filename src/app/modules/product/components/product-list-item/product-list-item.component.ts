@@ -1,23 +1,19 @@
-import { Component, Input } from '@angular/core';
-import { ShopService } from '../../services/shop.service';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'product-list-item',
   templateUrl: './product-list-item.component.html',
-  styleUrls: ['./product-list-item.component.scss']
+  styleUrls: ['./product-list-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductListItemComponent {
-  @Input() name = '';
-  @Input() price = '';
-  @Input() description = '';
-  @Input() category = '';
-  @Input() isAvailable: boolean = false;
-  @Input() id = '';
+  @Input() product!: Product;
 
-  constructor(private readonly shopService: ShopService) {}
+  @Output() addToCart: EventEmitter<string> = new EventEmitter();
 
-  addToCart() {
-    console.log(`Product ${this.id} added to cart.`);
-    this.shopService.buyProduct(this.id);
+  onAddToCart() {
+    this.addToCart.emit(this.product.id);
   }
 }

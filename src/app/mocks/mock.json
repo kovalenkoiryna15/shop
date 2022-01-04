@@ -5,21 +5,32 @@
       "name": "Product 1",
       "price": "100",
       "description": "Product description.",
-      "category": "Category-One"
+      "category": "Category-One",
+      "isAvailable": true
     },
     {
       "id": "1002",
       "name": "Product 2",
       "price": "200",
       "description": "Product description.",
-      "category": "Category-Two"
+      "category": "Category-Two",
+      "isAvailable": true
     },
     {
       "id": "1003",
       "name": "Product 3",
       "price": "300",
       "description": "Product description.",
-      "category": "Category-Three"
+      "category": "Category-Three",
+      "isAvailable": false
+    },
+    {
+      "id": "1004",
+      "name": "Product 4",
+      "price": "300",
+      "description": "Product description.",
+      "category": "Category-Three",
+      "isAvailable": true
     }
   ]
 }

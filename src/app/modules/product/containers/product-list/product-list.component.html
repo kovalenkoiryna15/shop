@@ -1,0 +1,4 @@
+<product-list-item
+  *ngFor="let product of (products$ | async)!; trackBy: trackById"
+  [product]="product"
+  (addToCart)="onBuyProduct($event)"></product-list-item>
